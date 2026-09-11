@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore the Map — Access Atlas</title>
+<meta name="description" content="Interactive map of healthcare shortage areas and health outcomes across all 254 Texas counties.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="">
+      <span>Access Atlas<span class="tag">Texas healthcare access, mapped</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="explore.html" aria-current="page">Explore the Map</a>
+      <a href="compare.html">Compare Counties</a>
+      <a href="about.html">About</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="feedback.html">Feedback</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="tight">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Explore Texas by county</h2>
+        <p>Choose a metric to color the map, then click any county for its full profile. Darker shading always means a higher numeric value for the selected metric — check the metric's direction in the panel to see whether higher is better or worse.</p>
+      </div>
+
+      <div class="explore-layout">
+        <div class="map-panel">
+          <div class="map-toolbar">
+            <div class="field">
+              <label for="metric-select">Map color shows</label>
+              <select id="metric-select" aria-describedby="metric-hint"></select>
+            </div>
+            <div class="field">
+              <label for="county-search">Jump to county</label>
+              <input type="search" id="county-search" list="county-list" placeholder="e.g. Travis" aria-label="Search for a county by name">
+              <datalist id="county-list"></datalist>
+            </div>
+          </div>
+          <div id="map" role="application" aria-label="Choropleth map of Texas counties"></div>
+          <div class="map-legend">
+            <div id="legend-title">Legend</div>
+            <div class="legend-ramp" id="legend-ramp" aria-hidden="true"></div>
+            <div class="legend-labels"><span id="legend-min"></span><span id="legend-max"></span></div>
+            <p id="metric-hint" class="text-muted" style="margin:8px 0 0;"></p>
+          </div>
+        </div>
+
+        <aside class="detail-panel" aria-live="polite">
+          <div id="panel-content">
+            <p class="empty-state">Click a county on the map, or search for one, to see its full data profile here.</p>
+          </div>
+        </aside>
+      </div>
+
+      <p style="margin-top:20px;">
+        <a href="#" id="table-view-toggle">View this data as a table instead</a>
+      </p>
+      <div id="table-view" hidden style="overflow-x:auto; margin-top:16px;"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><p style="margin:0;">Data from HRSA, CDC PLACES, County Health Rankings &amp; Roadmaps, and the U.S. Census Bureau. See <a href="methodology.html">methodology</a> for details and limitations.</p></div>
+    <div class="footer-links"><a href="about.html">About</a><a href="feedback.html">Feedback</a></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/explore.js"></script>
+</body>
+</html>

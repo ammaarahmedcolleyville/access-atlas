@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedback — Access Atlas</title>
+<meta name="description" content="Share usability feedback on Access Atlas.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="">
+      <span>Access Atlas<span class="tag">Texas healthcare access, mapped</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore the Map</a>
+      <a href="compare.html">Compare Counties</a>
+      <a href="about.html">About</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="feedback.html" aria-current="page">Feedback</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="tight">
+    <div class="wrap prose">
+      <h1>Help improve Access Atlas</h1>
+      <p>This is a working v1, and it's being tested with real people on purpose. Your honest reaction — including "this confused me" or "I didn't understand what this number meant" — is exactly what's useful. This should take about 5 minutes. Please don't include any personal health information in your answers.</p>
+
+      <form id="feedback-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-field">
+          <label for="role">Which best describes you?</label>
+          <select id="role" name="role" required>
+            <option value="">Choose one</option>
+            <option>Texas resident, general public</option>
+            <option>Student</option>
+            <option>Healthcare professional or student</option>
+            <option>Public health / policy background</option>
+            <option>Software / data background</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <fieldset>
+          <legend>Before you fill this out, please do one thing first</legend>
+          <p style="margin-top:0;font-size:0.9rem;">Open the <a href="explore.html" target="_blank" rel="noopener">Explore Map</a> and try to answer this question: <em>"Does the county you live in (or a county you know) have an active healthcare shortage designation, and how does its life expectancy compare to a nearby county?"</em> Then come back and answer below.</p>
+        </fieldset>
+
+        <div class="form-field">
+          <label for="task-success">Were you able to find that information?</label>
+          <select id="task-success" name="task_success" required>
+            <option value="">Choose one</option>
+            <option>Yes, easily</option>
+            <option>Yes, but it took some effort</option>
+            <option>No, I couldn't find it</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="clarity">How clear was the language and labeling (e.g., "HPSA," "age-adjusted")?</label>
+          <select id="clarity" name="clarity_rating" required>
+            <option value="">Choose one</option>
+            <option>Very clear</option>
+            <option>Mostly clear</option>
+            <option>Somewhat confusing</option>
+            <option>Very confusing</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="trust">Based on what you saw, how credible did the site feel as a source of information?</label>
+          <select id="trust" name="trust_rating" required>
+            <option value="">Choose one</option>
+            <option>Very credible</option>
+            <option>Somewhat credible</option>
+            <option>Not very credible</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="feedback-type">What type of feedback is this mainly?</label>
+          <select id="feedback-type" name="feedback_type" required>
+            <option value="">Choose one</option>
+            <option>Something was confusing</option>
+            <option>Something looked broken / didn't work</option>
+            <option>Suggestion for a new feature</option>
+            <option>Accessibility issue (e.g., hard to read, keyboard/screen reader trouble)</option>
+            <option>General praise or comment</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="details">Tell us more</label>
+          <textarea id="details" name="details" rows="5" placeholder="What happened? What did you expect instead?" required></textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="device">What were you using?</label>
+          <select id="device" name="device">
+            <option value="">Choose one (optional)</option>
+            <option>Phone</option>
+            <option>Laptop / desktop</option>
+            <option>Tablet</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email (optional, only if you're open to a follow-up question)</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send feedback</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><p style="margin:0;">Feedback is used only to improve this site and is never sold or shared.</p></div>
+    <div class="footer-links"><a href="about.html">About</a><a href="methodology.html">Methodology</a></div>
+  </div>
+</footer>
+</body>
+</html>

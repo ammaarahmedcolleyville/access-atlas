@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data &amp; Methodology — Access Atlas</title>
+<meta name="description" content="Data sources, definitions, cleaning methodology, and known limitations behind Access Atlas.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="">
+      <span>Access Atlas<span class="tag">Texas healthcare access, mapped</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore the Map</a>
+      <a href="compare.html">Compare Counties</a>
+      <a href="about.html">About</a>
+      <a href="methodology.html" aria-current="page">Methodology</a>
+      <a href="feedback.html">Feedback</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="tight">
+    <div class="wrap prose">
+      <h1>Data &amp; Methodology</h1>
+      <p>Every number on Access Atlas traces back to one of four public sources. This page documents exactly what each source measures, how the datasets were joined, and — just as important — what they cannot tell you.</p>
+
+      <h2>Data sources</h2>
+      <table class="source-table">
+        <thead><tr><th>Source</th><th>What it provides</th><th>Retrieved</th><th>Link</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>HRSA Health Professional Shortage Areas (HPSA), Primary Care</td>
+            <td>Federally designated shortage areas, scores, and estimated underserved population</td>
+            <td>September 2026</td>
+            <td><a href="https://data.hrsa.gov/topics/health-workforce/shortage-areas">data.hrsa.gov</a></td>
+          </tr>
+          <tr>
+            <td>County Health Rankings &amp; Roadmaps, 2025 Texas data</td>
+            <td>Provider supply rates (physicians, dentists, mental health providers), uninsured rate, life expectancy, income, rurality</td>
+            <td>September 2026</td>
+            <td><a href="https://www.countyhealthrankings.org/health-data/texas">countyhealthrankings.org</a></td>
+          </tr>
+          <tr>
+            <td>CDC PLACES, 2025 release (county)</td>
+            <td>Model-based small-area estimates of chronic disease, mental health, and preventive care measures</td>
+            <td>September 2026</td>
+            <td><a href="https://www.cdc.gov/places/">cdc.gov/places</a></td>
+          </tr>
+          <tr>
+            <td>U.S. Census Bureau, 2024 Cartographic Boundary File</td>
+            <td>County boundary geometry for the map</td>
+            <td>September 2026</td>
+            <td><a href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html">census.gov</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>How the datasets were joined</h2>
+      <p>All three statistical sources publish a 5-digit Federal Information Processing Standards (FIPS) code for every U.S. county — the standard geographic identifier used across federal agencies. Access Atlas uses this FIPS code as the single join key, so every figure shown for "Travis County" in the map comes from the same underlying county across all three sources, with no name-matching or geocoding involved.</p>
+      <p>The full data pipeline — download, clean, join, export — is written in Python and is public in the project's <code>/data-pipeline</code> folder. It can be re-run at any time to pull current data.</p>
+
+      <h2>Key definitions</h2>
+      <h3>HPSA (Health Professional Shortage Area)</h3>
+      <p>A formal federal designation, scored 0–26 (higher = more severe shortage), used to direct resources such as the National Health Service Corps loan repayment program and Medicare bonus payments. A county can contain multiple overlapping HPSA designations (for example, a low-income population designation and a separate geographic-area designation), so Access Atlas reports the <strong>count of currently active ("Designated") primary care HPSAs</strong> per county, not a single yes/no flag.</p>
+      <h3>Age-adjusted vs. crude prevalence</h3>
+      <p>CDC PLACES publishes both. Access Atlas uses <strong>age-adjusted prevalence</strong> wherever available, because it statistically controls for a county's age distribution — without it, a county full of retirees would look far unhealthier than a county full of college students purely due to age, not underlying health. Where a measure is only published as crude prevalence, that is used instead and is not distinguished further on the county detail panel.</p>
+      <h3>Provider rate vs. ratio</h3>
+      <p>"Physicians per 100,000 residents" (rate) and "population per physician" (ratio, e.g. "1,194:1") describe the same underlying supply from two directions. Access Atlas shows the rate on the map and both on the county detail panel.</p>
+
+      <h2 id="limitations">Limitations</h2>
+      <ul>
+        <li><strong>This is a single-year snapshot (2025), not a time series.</strong> A future version could show trends year over year; v1 does not.</li>
+        <li><strong>Small counties have missing data.</strong> When a county's population is too small for a statistically reliable estimate, the source agency does not publish a value, and Access Atlas shows it as "not available" rather than guessing. Do not read a blank field as "zero" or as "good."</li>
+        <li><strong>HPSA "estimated underserved population" can overlap.</strong> A county with multiple HPSA designations may double-count residents who fall under more than one designation (e.g., a low-income-population HPSA and a separate facility-based HPSA covering some of the same people). Treat this figure as an upper-bound indicator of need, not a precise headcount.</li>
+        <li><strong>CDC PLACES estimates are modeled, not censused.</strong> They are derived from the Behavioral Risk Factor Surveillance System (BRFSS), a self-reported telephone/online survey, combined with a statistical small-area estimation model — not a direct measurement of every resident.</li>
+        <li><strong>Correlation, not causation.</strong> Access Atlas lets you see a shortage designation and a health outcome for the same county side by side. It does not run any statistical test, and it makes no claim that one causes the other. Counties differ in dozens of ways — income, age, insurance status, rurality, access to transportation — that plausibly affect both.</li>
+        <li><strong>This tool does not know you.</strong> A county-level statistic describes an average across tens of thousands of people. It says nothing about any specific individual's risk, diagnosis, or care needs.</li>
+      </ul>
+
+      <h2>Privacy</h2>
+      <p>Access Atlas only publishes pre-aggregated, de-identified, county-level public data. It does not collect health information from visitors. The only data collected from visitors is optional, non-health usability feedback (see <a href="feedback.html">feedback page</a>), which is used solely to improve the site.</p>
+
+      <h2>Source code</h2>
+      <p>The complete data pipeline, frontend code, and this documentation are public on <a href="https://github.com/ammaarahmedcolleyville/access-atlas">GitHub</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><p style="margin:0;">Not affiliated with any government agency. Not medical advice.</p></div>
+    <div class="footer-links"><a href="about.html">About</a><a href="feedback.html">Feedback</a></div>
+  </div>
+</footer>
+</body>
+</html>

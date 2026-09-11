@@ -1,0 +1,15 @@
+# Raw downloaded source data (large, re-fetchable, not needed in version control)
+data-pipeline/raw/*
+!data-pipeline/raw/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# SQLite database (rebuildable from raw + scripts)
+data-pipeline/*.db
+
+# OS
+.DS_Store
+Thumbs.db

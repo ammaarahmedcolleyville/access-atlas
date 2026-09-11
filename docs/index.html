@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Access Atlas — Mapping Healthcare Access Across Texas</title>
+<meta name="description" content="Access Atlas maps healthcare shortage areas, provider supply, and health outcomes across all 254 Texas counties using public HRSA, CDC, and County Health Rankings data.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="">
+      <span>Access Atlas<span class="tag">Texas healthcare access, mapped</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="explore.html">Explore the Map</a>
+      <a href="compare.html">Compare Counties</a>
+      <a href="about.html">About</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="feedback.html">Feedback</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Where you live in Texas still shapes whether you can see a doctor.</h1>
+      <p class="lede">Access Atlas maps federally designated healthcare shortage areas alongside real health outcomes for all 254 Texas counties — so the pattern is visible, not anecdotal.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="explore.html">Explore the map</a>
+        <a class="btn btn-secondary" href="compare.html">Compare two counties</a>
+      </div>
+      <div class="disclaimer-banner">
+        <strong>This is an informational tool, not medical advice.</strong> Access Atlas visualizes publicly published county-level statistics. It cannot diagnose, does not know your personal health situation, and should never replace guidance from a licensed clinician.
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The pattern, in the state's own data</h2>
+        <p>These figures are computed live from the datasets this site publishes — see <a href="methodology.html">methodology</a> for exact definitions.</p>
+      </div>
+      <div class="stat-row" id="stat-row" aria-live="polite">
+        <div class="stat-tile"><div class="label">Loading current statistics…</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What Access Atlas actually shows you</h2>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Shortage designations, mapped</h3>
+          <p>HRSA's Health Professional Shortage Area (HPSA) program formally designates places, populations, and facilities with too few primary care providers. Access Atlas shows exactly where those active designations sit today.</p>
+        </div>
+        <div class="card">
+          <h3>Provider supply, by county</h3>
+          <p>County-level rates of primary care physicians, dentists, and mental health providers per 100,000 residents, from County Health Rankings &amp; Roadmaps.</p>
+        </div>
+        <div class="card">
+          <h3>Health outcomes, side by side</h3>
+          <p>CDC PLACES model-based estimates of chronic disease, mental health, and preventive care use — age-adjusted so counties with different age structures can be compared fairly.</p>
+        </div>
+        <div class="card">
+          <h3>Compare any two counties</h3>
+          <p>Put up to four counties side by side across every metric to see how access and outcomes actually differ, not just guess.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Why this matters</h2>
+        <p class="text-muted" style="max-width:70ch;">
+          A Health Professional Shortage Area designation is a real regulatory
+          classification used to direct federal resources — loan repayment for
+          providers, funding for community health centers, Medicare bonus
+          payments. Whether a county has one, and how severe its score is,
+          has concrete consequences for the people who live there. Most
+          residents have never seen this data visualized. Access Atlas exists
+          to make it legible to the public, not just to health policy staff.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p style="margin:0 0 6px;">Built as an independent student project. Data from HRSA, CDC, County Health Rankings &amp; Roadmaps, and the U.S. Census Bureau.</p>
+      <p style="margin:0;">Not affiliated with any government agency. Not medical advice.</p>
+    </div>
+    <div class="footer-links">
+      <a href="methodology.html">Data &amp; Methodology</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="https://github.com/ammaarahmedcolleyville/access-atlas" id="repo-link">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+(async () => {
+  const el = document.getElementById("stat-row");
+  try {
+    const counties = await AccessAtlas.loadCounties();
+    const n = counties.length;
+    const shortageCounties = counties.filter(c => c.hpsa_active_count > 0);
+    const totalPop = counties.reduce((s, c) => s + (c.population || 0), 0);
+    const popInShortage = shortageCounties.reduce((s, c) => s + (c.population || 0), 0);
+    const withLE = counties.filter(c => c.life_expectancy_years);
+    const maxLE = withLE.reduce((a, b) => a.life_expectancy_years > b.life_expectancy_years ? a : b);
+    const minLE = withLE.reduce((a, b) => a.life_expectancy_years < b.life_expectancy_years ? a : b);
+    const gap = (maxLE.life_expectancy_years - minLE.life_expectancy_years).toFixed(0);
+
+    el.innerHTML = "";
+    const tiles = [
+      { label: "Texas counties with an active primary care shortage designation", value: `${shortageCounties.length} <small>of ${n}</small>`, note: `${Math.round(shortageCounties.length / n * 100)}% of all Texas counties` },
+      { label: "Texans living in a county with an active shortage designation", value: `${Math.round(popInShortage / 1e6)}M`, note: `${Math.round(popInShortage / totalPop * 100)}% of the state's population` },
+      { label: "Life expectancy gap, highest vs. lowest county", value: `${gap} <small>years</small>`, note: `${maxLE.county_name} County vs. ${minLE.county_name} County` },
+    ];
+    for (const t of tiles) {
+      const div = document.createElement("div");
+      div.className = "stat-tile";
+      div.innerHTML = `<div class="label"></div><div class="value"></div><div class="note"></div>`;
+      div.querySelector(".label").textContent = t.label;
+      div.querySelector(".value").innerHTML = t.value;
+      div.querySelector(".note").textContent = t.note;
+      el.appendChild(div);
+    }
+  } catch (e) {
+    el.innerHTML = '<div class="stat-tile"><div class="label">Statistics unavailable — data failed to load.</div></div>';
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

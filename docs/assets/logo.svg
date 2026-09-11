@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Access Atlas logo">
+  <path d="M24 4C15.2 4 8 11.2 8 20c0 12 16 24 16 24s16-12 16-24c0-8.8-7.2-16-16-16z" fill="#2a78d6"/>
+  <circle cx="24" cy="20" r="7" fill="#fcfcfb"/>
+  <path d="M24 15v10M19 20h10" stroke="#2a78d6" stroke-width="2.4" stroke-linecap="round"/>
+</svg>
