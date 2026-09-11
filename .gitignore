@@ -13,3 +13,6 @@ data-pipeline/*.db
 # OS
 .DS_Store
 Thumbs.db
+
+# Scratch commit-message files
+.git-commit-msg.txt

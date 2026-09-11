@@ -15,11 +15,11 @@ This file is an honest, running record of what I (the student) actually decided,
 
 ---
 
-## [Student note: everything below this line is a template — fill it in as it actually happens]
+## 2026-09-11 — About page copy, QA pass, and Formspree setup
 
-## YYYY-MM-DD — Personal motivation
-
-- Replace the placeholder paragraph in `docs/about.html` (search for "Student note") with your own real reason for building this project. Record here, briefly, what you wrote and why.
+- Wrote and revised the "Why I built this" paragraph on the About page. Final version deliberately does not name a specific school or major — I'm applying to multiple schools with different intended majors, and a page naming one specific program could look inconsistent to a different admissions office reading a different application.
+- Caught two real errors on the live About page and had them corrected: (1) it called Concho and Red River counties "neighboring" in the life-expectancy stat — they aren't, they're just the state's highest- and lowest-life-expectancy counties; (2) it claimed the site had already been "tested with a small number of real users," which wasn't true at the time since no testing had happened yet.
+- Signed up for a free Formspree account myself and created the feedback form endpoint, so real submissions from usability testers will actually reach me.
 
 ## YYYY-MM-DD — Usability test session #1
 
